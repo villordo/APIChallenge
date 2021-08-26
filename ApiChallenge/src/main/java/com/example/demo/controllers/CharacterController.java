@@ -1,14 +1,13 @@
-package com.example.demo.Controllers;
+package com.example.demo.controllers;
 
-import com.example.demo.Exceptions.AlreadyExistsException;
-import com.example.demo.Services.CharacterService;
+import com.example.demo.exceptions.AlreadyExistsException;
+import com.example.demo.services.CharacterService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.Models.Character;
+import com.example.demo.models.Character;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/character")
@@ -28,17 +27,25 @@ public class CharacterController {
         return characterService.getCharacterById(characterId);
     }
     /*
+       Obtiene todos los registros de la tabla characters
+    */
+    @GetMapping("/")
+    public List<Character> getAll(){
+        return characterService.getAll();
+    }
+    /*
        Agrega un nuevo Character a la BDD
     */
     @PostMapping("/")       //@RequestBody convierte la peticion web(Json) al obj Character
     public void addCharacter(@RequestBody Character character) throws AlreadyExistsException {
         characterService.addCharacter(character);
     }
+
     /*
-        Obtiene todos los registros de la tabla characters
+        Borra un registro que coincida con el campo character_id
     */
-    @GetMapping("/")
-    public List<Character> getAll(){
-        return characterService.getAll();
+    @DeleteMapping("/{characterId}")
+    public void removeCharacter(@PathVariable Integer characterId) throws NotFoundException {
+        characterService.remove(characterId);
     }
 }

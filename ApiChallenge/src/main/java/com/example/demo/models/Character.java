@@ -1,4 +1,4 @@
-package com.example.demo.Models;
+package com.example.demo.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +16,8 @@ import java.util.List;
 public class Character {
 
     @Id
-    @GeneratedValue  //Autoincrement
-    private Integer id;
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Integer character_id;
 
     private Boolean image;
     private String name;

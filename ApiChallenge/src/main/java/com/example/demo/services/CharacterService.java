@@ -1,16 +1,14 @@
-package com.example.demo.Services;
+package com.example.demo.services;
 
 
-import com.example.demo.Exceptions.AlreadyExistsException;
-import com.example.demo.Models.Character;
-import com.example.demo.Repository.CharacterRepository;
+import com.example.demo.exceptions.AlreadyExistsException;
+import com.example.demo.models.Character;
+import com.example.demo.repositories.CharacterRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.rmi.AlreadyBoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CharacterService {
@@ -23,9 +21,9 @@ public class CharacterService {
     }
 
     public void addCharacter(Character character) throws AlreadyExistsException {
-        if(characterRepository.findById(character.getId()).isPresent()){
-            throw new AlreadyExistsException();
-        }
+        /*if(characterRepository.findById(character.getCharacter_id()).isPresent()){
+            throw new AlreadyExistsException();  //Que campo NO se deberia repetir?
+        }*/
         characterRepository.save(character);
     }
 
@@ -36,5 +34,11 @@ public class CharacterService {
 
     public List<Character> getAll() {
         return characterRepository.findAll();
+    }
+
+    public void remove(Integer characterId) throws NotFoundException {
+
+        Character toRemove = characterRepository.findById(characterId).orElseThrow(() -> new NotFoundException("Character doesn't exist."));
+        characterRepository.delete(toRemove);
     }
 }
