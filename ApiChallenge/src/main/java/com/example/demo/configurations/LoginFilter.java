@@ -1,9 +1,6 @@
 package com.example.demo.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtBuilder;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,10 +28,10 @@ public class LoginFilter  extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        User credentials = null;
+        UserModel credentials = null;
 
         try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            credentials = new ObjectMapper().readValue(request.getInputStream(), UserModel.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User implements Serializable {
+public class UserModel{
     private String username;
     private String password;
 }

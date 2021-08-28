@@ -12,23 +12,34 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity //Le decimos que es una entidad de persistencia
-@Table( name = "Character")
+@Table( name = "characters")
 public class Character {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private Integer character_id;
+    @Column(name = "id_character")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Integer id_character;
 
-    private Boolean image;
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "image")
+    private Boolean image;
+
+    @Column(name = "age")
     private Integer age;
+
+    @Column(name = "weight")
     private Integer weight;
+
+    @Column(name = "history")
     private String history;
+
     @ManyToMany ()
     @JoinTable(
             name = "characters_x_movies",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
+            joinColumns = @JoinColumn(name = "id_character"),
+            inverseJoinColumns = @JoinColumn(name = "id_movie")
     )
     private List<Movie> movieList = new ArrayList<Movie>();
 

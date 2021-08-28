@@ -1,8 +1,0 @@
-spring:
-  h2:
-    console:
-      enabled: true
-      paths:/h2-console
-
-jpa:
-  show-sql: true
