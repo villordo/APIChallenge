@@ -10,14 +10,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table ( name = "Gender" )
+@Table ( name = "genders" )
 public class Gender {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)//Autoincrement
-    private Integer gender_id;
+    @Column(name = "id_gender")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)//Autoincrement
+    private Integer id_gender;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "image")
     private Boolean image;
 
 

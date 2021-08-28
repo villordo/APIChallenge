@@ -13,20 +13,31 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Movie")
+@Table(name = "movies")
 public class Movie {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO) //Autoincrement
+    @Column(name = "id_movie")
+    @GeneratedValue (strategy = GenerationType.IDENTITY) //Autoincrement
     private Integer movie_id;
-    private Boolean image;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "image")
+    private Boolean image;
+
+    @Column(name = "creation_date")
     private Date date;
+
+    @Column(name = "qualification")
     private Integer qualification;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "gender_id", referencedColumnName = "gender_id")
+    @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
     //@JsonBackReference(value = "phoneLineUser") TODO: Buscar pa q sirve
     private Gender gender;
+
     @ManyToMany ( mappedBy = "movieList")
     private List<Character> characterList = new ArrayList<Character>();
 
