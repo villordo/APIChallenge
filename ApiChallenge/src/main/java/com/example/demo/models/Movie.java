@@ -25,7 +25,7 @@ public class Movie {
     private String title;
 
     @Column(name = "image")
-    private Boolean image;
+    private String image;
 
     @Column(name = "creation_date")
     private Date date;

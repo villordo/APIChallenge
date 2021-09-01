@@ -1,7 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.exceptions.NotValidRolException;
-import com.example.demo.models.dtos.PostUsersDto;
+import com.example.demo.models.dtos.PostUserDto;
 import com.example.demo.models.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +21,7 @@ public class User {
     @Id
     @Column(name = "id_user")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer user_id;
+    private Integer id_user;
 
     @Column(name = "username",unique = true)
     private String username;
@@ -33,7 +33,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Rol rol;
 
-    public static User fromPostDto(PostUsersDto userDto) throws NotValidRolException {
+    public static User fromPostDto(PostUserDto userDto) throws NotValidRolException {
 
         return User.builder()
                 .username(userDto.getUsername())
