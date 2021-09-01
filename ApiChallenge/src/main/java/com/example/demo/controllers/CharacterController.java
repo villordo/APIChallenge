@@ -1,16 +1,19 @@
 package com.example.demo.controllers;
 
 import com.example.demo.exceptions.AlreadyExistsException;
+import com.example.demo.models.dtos.CharacterDto;
 import com.example.demo.services.CharacterService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.models.Character;
 
+import java.util.Collection;
 import java.util.List;
 
-@RestController
-@RequestMapping("/character")
+@Controller
 public class CharacterController {
 
     private final CharacterService characterService;
@@ -19,33 +22,37 @@ public class CharacterController {
     public CharacterController(CharacterService characterService){
         this.characterService = characterService;
     }
-    /*
-       Obtiene un Character especifico segun el ID
-    */
-    @GetMapping("/{characterId}")
-    public Character getCharacter(@PathVariable Integer characterId) throws NotFoundException {
+
+
+    public Character getCharacterById(@PathVariable Integer characterId) throws NotFoundException {
         return characterService.getCharacterById(characterId);
     }
-    /*
-       Obtiene todos los registros de la tabla characters
-    */
-    @GetMapping("/")
+
     public List<Character> getAll(){
         return characterService.getAll();
     }
-    /*
-       Agrega un nuevo Character a la BDD
-    */
-    @PostMapping("/")       //@RequestBody convierte la peticion web(Json) al obj Character
-    public void addCharacter(@RequestBody Character character) throws AlreadyExistsException {
-        characterService.addCharacter(character);
+
+    public Character addCharacter(@RequestBody Character character) throws AlreadyExistsException {
+       return characterService.addCharacter(character);
     }
 
-    /*
-        Borra un registro que coincida con el campo character_id
-    */
-    @DeleteMapping("/{characterId}")
     public void removeCharacter(@PathVariable Integer characterId) throws NotFoundException {
         characterService.remove(characterId);
+    }
+
+    public void updateCharacter(Character updatedCharacter) throws NotFoundException {
+        characterService.updateCharacter(updatedCharacter);
+    }
+
+    public Character getCharacterByName(String name) throws NotFoundException {
+       return characterService.getCharacterByName(name);
+    }
+
+    public List<Character> getCharactersByAge(Integer age) throws NotFoundException {
+        return characterService.getCharacterByAge(age);
+    }
+
+    public List<Character> getCharactersByWeight(Integer weight) {
+        return characterService.getCharactersByWeight(weight);
     }
 }

@@ -18,13 +18,13 @@ public class Character {
     @Id
     @Column(name = "id_character")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer id_character;
+    private Integer idCharacter;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "image")
-    private Boolean image;
+    private String image;
 
     @Column(name = "age")
     private Integer age;

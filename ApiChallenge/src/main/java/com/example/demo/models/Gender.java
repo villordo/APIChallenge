@@ -22,7 +22,7 @@ public class Gender {
     private String name;
 
     @Column(name = "image")
-    private Boolean image;
+    private String image;
 
 
 }

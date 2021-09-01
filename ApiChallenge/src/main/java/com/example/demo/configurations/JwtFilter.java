@@ -16,6 +16,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 public class JwtFilter extends GenericFilterBean {
     private UserRepository userRepository;
@@ -44,10 +45,11 @@ public class JwtFilter extends GenericFilterBean {
                     .getSubject();
 
             if(userName != null) {
-                User userFilter = userRepository.findByUsername(userName);
-                UserConfigurationToken principal = new UserConfigurationToken(userFilter.getUsername(), userFilter.getPassword(), JwtUtil.getGrantedAuthority(userFilter.getRol()));
+                Optional<User> userOpt = userRepository.findByUsername(userName);
+                User user = userOpt.get();
+                UserConfigurationToken principal = new UserConfigurationToken(user.getUsername(), user.getPassword(), JwtUtil.getGrantedAuthority(user.getRol()));
 
-                return new UsernamePasswordAuthenticationToken(userFilter, null, principal.getAuthorities());
+                return new UsernamePasswordAuthenticationToken(user, null, principal.getAuthorities());
 
             }
 

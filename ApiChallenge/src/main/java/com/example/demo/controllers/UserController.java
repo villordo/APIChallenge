@@ -1,24 +1,26 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exceptions.AlreadyExistsException;
 import com.example.demo.exceptions.NotValidRolException;
 import com.example.demo.models.User;
-import com.example.demo.models.dtos.PostUsersDto;
+import com.example.demo.models.dtos.PostUserDto;
 import com.example.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/users")
-@RequiredArgsConstructor
+@Controller
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/")
-    public User save(@RequestBody PostUsersDto user) throws NotValidRolException {
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    public User save(@RequestBody PostUserDto user) throws NotValidRolException, AlreadyExistsException {
 
         return userService.save(user);
     }
