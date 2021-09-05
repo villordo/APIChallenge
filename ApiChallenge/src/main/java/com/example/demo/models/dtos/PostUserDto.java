@@ -13,6 +13,9 @@ public class PostUserDto {
 
     private String password;
 
+    private String email;
+
     private String rol;
+
 
 }

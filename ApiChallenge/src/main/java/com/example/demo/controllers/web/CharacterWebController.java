@@ -4,6 +4,8 @@ import com.example.demo.controllers.CharacterController;
 import com.example.demo.exceptions.AlreadyExistsException;
 import com.example.demo.models.Character;
 import com.example.demo.models.dtos.CharacterDto;
+import com.example.demo.models.dtos.response.CharDetailResponseDto;
+import com.example.demo.models.proyections.CharactersByMovie;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,14 +27,16 @@ public class CharacterWebController {
         this.characterController = characterController;
     }
 
-    /*************************************************************************************************************************************/
+    //*****************************---------------------------GET---------------------------*******************************************************************************/
 
     /*
        Obtiene un Character especifico segun el ID
     */
     @GetMapping("/{characterId}")
     public ResponseEntity getCharacterById(@PathVariable Integer characterId) throws NotFoundException {
+        //CharDetailResponseDto character = CharDetailResponseDto.buildResponse(characterController.getCharacterById(characterId));
         Character character = characterController.getCharacterById(characterId);
+
         return (character != null)? ResponseEntity.ok(character) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(character);
     }
     /*
@@ -66,6 +70,14 @@ public class CharacterWebController {
         return characters.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(characters) : ResponseEntity.ok(characters);
     }
     /*
+       Obtiene una lista de Characters pertenecientes a una Movie especifica
+    */
+    @RequestMapping(params="movie", method = RequestMethod.GET)
+    public ResponseEntity<List<CharactersByMovie>> getCharactersByIdMovie(@RequestParam(value = "movie") Integer movie) throws NotFoundException {
+        List<CharactersByMovie> characters = characterController.getCharactersByIdMovie(movie);
+        return characters.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(characters) : ResponseEntity.ok(characters);
+    }
+    /*
        Obtiene todos los registros de la tabla characters
     */
     @GetMapping("/")
@@ -76,7 +88,9 @@ public class CharacterWebController {
                 .collect(Collectors.toList());
         return characters.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(characters) : ResponseEntity.ok(characters);
     }
-/*************************************************************************************************************************************/
+
+
+//**********************************---------------------ABM---------------------*********************************************/
     /*
        Agrega un nuevo Character a la BDD
     */
@@ -93,7 +107,9 @@ public class CharacterWebController {
         characterController.removeCharacter(idCharacter);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
+    /*
+        Actualiza los datos de un Character
+     */
     @PutMapping("/")
         public ResponseEntity updateCharacter(@RequestBody Character updatedCharacter) throws NotFoundException {
         characterController.updateCharacter(updatedCharacter);
