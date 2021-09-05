@@ -39,6 +39,7 @@ CREATE TABLE users(
     id_user int NOT NULL auto_increment PRIMARY KEY,
     username varchar(30) UNIQUE NOT NULL,
     pass varchar(150) NOT NULL,
+    email varchar(20) NOT NULL,
     rol enum('client', 'admin')
 );
 
@@ -48,7 +49,7 @@ insert into characters (name,image,age,weight,history) values ("Alex Plosivo",""
 insert into genders (name,image) values ("Horror",""),("Comedia",""),("Misterio","");
 insert into movies (title,image,creation_date,qualification,id_gender) values ("La casa del Terror","",NOW(),4,1),
 ("La novia de mi amigo","",NOW(),4,2),("La casa del lago","",NOW(),4,3),("Dia lluvioso","",NOW(),4,3);
-insert into characters_x_movies (id_character,id_movie) values (3,1),(4,1),(5,2),(6,2),(7,2),(8,3),(3,4),(4,4);
+insert into characters_x_movies (id_character,id_movie) values (1,1),(2,1),(3,2),(4,2),(5,2),(6,3),(1,4),(2,4);
 
 select * from genders;
 select * from movies;

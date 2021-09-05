@@ -4,7 +4,10 @@ package com.example.demo.services;
 import com.example.demo.exceptions.AlreadyExistsException;
 import com.example.demo.models.Character;
 import com.example.demo.models.dtos.CharacterDto;
+import com.example.demo.models.dtos.response.CharDetailResponseDto;
+import com.example.demo.models.proyections.CharactersByMovie;
 import com.example.demo.repositories.CharacterRepository;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +27,9 @@ public class CharacterService {
     }
 
     public Character addCharacter(Character character) throws AlreadyExistsException {
-        /*if(characterRepository.findById(character.getCharacter_id()).isPresent()){
-            throw new AlreadyExistsException();  //Que campo NO se deberia repetir?
-        }*/
+        if(characterRepository.findByName(character.getName()).isPresent()){
+            throw new AlreadyExistsException("Character already exists.");
+        }
         return characterRepository.save(character);
     }
 
@@ -40,16 +43,14 @@ public class CharacterService {
     }
 
     public void remove(Integer characterId) throws NotFoundException {
-
-        Character toRemove = characterRepository.findById(characterId).orElseThrow(() -> new NotFoundException("Character doesn't exist."));
+        Character toRemove = characterRepository.findById(characterId)
+                .orElseThrow(() -> new NotFoundException("Character doesn't exist."));
         characterRepository.delete(toRemove);
     }
     //TODO:probar esta funcion
     public Character updateCharacter(Character updatedCharacter) throws NotFoundException {
-
-        Character oldCharacter = removedVerification(updatedCharacter.getIdCharacter());
-        Optional.ofNullable(updatedCharacter.getName()).ifPresent(oldCharacter::setName);
-        return characterRepository.save(oldCharacter);
+        removedVerification(updatedCharacter.getId());
+        return characterRepository.save(updatedCharacter);
     }
 
     private Character removedVerification(Integer idCharacter) throws NotFoundException {
@@ -70,5 +71,9 @@ public class CharacterService {
 
     public List<Character> getCharactersByWeight(Integer weight) {
         return characterRepository.findAllByWeight(weight);
+    }
+
+    public List<CharactersByMovie> getCharactersByIdMovie(Integer idMovie) {
+        return characterRepository.getCharactersByIdMovie(idMovie);
     }
 }

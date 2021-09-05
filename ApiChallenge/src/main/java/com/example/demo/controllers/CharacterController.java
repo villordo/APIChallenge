@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.exceptions.AlreadyExistsException;
 import com.example.demo.models.dtos.CharacterDto;
+import com.example.demo.models.dtos.response.CharDetailResponseDto;
+import com.example.demo.models.proyections.CharactersByMovie;
 import com.example.demo.services.CharacterService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.models.Character;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -54,5 +57,9 @@ public class CharacterController {
 
     public List<Character> getCharactersByWeight(Integer weight) {
         return characterService.getCharactersByWeight(weight);
+    }
+
+    public List<CharactersByMovie> getCharactersByIdMovie(Integer idMovie) {
+        return characterService.getCharactersByIdMovie(idMovie);
     }
 }

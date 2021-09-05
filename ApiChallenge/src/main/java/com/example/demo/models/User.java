@@ -21,13 +21,16 @@ public class User {
     @Id
     @Column(name = "id_user")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer id_user;
+    private Integer id;
 
     @Column(name = "username",unique = true)
     private String username;
 
     @Column(name = "pass")
     private String password;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "rol")
     @Enumerated(value = EnumType.STRING)

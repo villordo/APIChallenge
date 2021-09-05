@@ -1,10 +1,11 @@
 package com.example.demo.controllers.handler;
 
 import com.example.demo.exceptions.AlreadyExistsException;
-import com.example.demo.exceptions.NotFoundException;
+//import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.exceptions.NotValidRolException;
-import com.example.demo.models.dtos.ErrorDtoResponse;
+import com.example.demo.models.dtos.response.ErrorDtoResponse;
 import io.jsonwebtoken.ExpiredJwtException;
+import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
